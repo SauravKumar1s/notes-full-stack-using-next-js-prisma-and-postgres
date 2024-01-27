@@ -1,13 +1,13 @@
 import { Mood } from "@prisma/client";
 import prisma from "../../../lib/prisma";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
 type Props = {
   id: string;
   title: string;
   content: string;
-  mood: Mood;
+  mood: Mood; // Assuming Mood is a specific type from "@prisma/client"
 };
 
 export default async function Notes({ id, title, content, mood }: Props) {
@@ -15,13 +15,11 @@ export default async function Notes({ id, title, content, mood }: Props) {
 
   return (
     <div className="container mx-auto p-4">
-      <Link
-        href="/notes/add/create"
-        className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
-      >
-        Add Notes
+      <Link href="/notes/add/create" className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+          Add Notes
       </Link>
 
+      {/* List of Notes */}
       <div>
         <h2 className="text-2xl font-bold mb-4">{title}</h2>
         <p className="text-lg mb-2">{content}</p>

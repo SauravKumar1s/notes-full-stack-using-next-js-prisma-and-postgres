@@ -66,7 +66,7 @@ export default function CreatePage() {
             <option value="" disabled selected>
               Select a mood
             </option>
-            {moods.map((mood, idx) => (
+            {moods.map((mood, idx) => z(
               <option key={idx} value={mood}>
                 {mood}
               </option>
