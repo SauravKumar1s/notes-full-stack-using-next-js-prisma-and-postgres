@@ -3,20 +3,22 @@ import { Mood } from "@prisma/client";
 import { redirect } from "next/navigation";
 import prisma from "../../../../lib/prisma";
 
-
-
-export default async function EditPage({searchParams : {id}} : {searchParams: {id:string}}) {
-    async function editNotes(data: FormData) {
-        "use server";
-        const formData = {
-          title: data.get("title")!.toString(),
-          content: data.get("content")!.toString(),
-          mood: data.get("mood")! as Mood,
-        };
-        await prisma.entry.update({ data: formData , where: {id} });
-        redirect("/");
-      }  
-  const entry = await prisma.entry.findUnique({where: {id}})
+export default async function EditPage({
+  searchParams: { id },
+}: {
+  searchParams: { id: string };
+}) {
+  async function editNotes(data: FormData) {
+    "use server";
+    const formData = {
+      title: data.get("title")!.toString(),
+      content: data.get("content")!.toString(),
+      mood: data.get("mood")! as Mood,
+    };
+    await prisma.entry.update({ data: formData, where: { id } });
+    redirect("/");
+  }
+  const entry = await prisma.entry.findUnique({ where: { id } });
   const moods = Object.values(Mood);
 
   return (
@@ -45,7 +47,6 @@ export default async function EditPage({searchParams : {id}} : {searchParams: {i
           <label
             className="block text-sm font-medium text-gray-700"
             htmlFor="content"
-
           >
             Content
           </label>
@@ -55,7 +56,6 @@ export default async function EditPage({searchParams : {id}} : {searchParams: {i
             placeholder="Enter content"
             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
             defaultValue={entry?.content}
-
           ></textarea>
         </div>
         <div className="mb-4">
@@ -63,17 +63,17 @@ export default async function EditPage({searchParams : {id}} : {searchParams: {i
             className="block text-sm font-medium text-gray-700"
             htmlFor="mood"
           >
-            Mood
+            Select the Categories
           </label>
           <select
             name="mood"
             className="mt-1 p-2 border border-gray-300 rounded-md w-full"
           >
             <option value="" disabled selected>
-              Select a mood
+              Select a Catogries
             </option>
             {moods.map((mood, idx) => (
-              <option key={idx} value={mood} defaultValue={entry?.mood}>
+              <option key={idx} defaultValue={entry?.mood}>
                 {mood}
               </option>
             ))}
