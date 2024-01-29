@@ -16,10 +16,8 @@ model Entry{
 }
 
 enum Mood{
-  Joyful
-  Excited
-  Angry
-  Depressed
-  Exhausted
-  Anxious
+  Personal
+  Work
+  Travel
+  Health
 }
