@@ -1,21 +1,21 @@
-import React from "react";
-import { Mood } from "@prisma/client";
-import { redirect } from "next/navigation";
-import prisma from "../../../../../lib/prisma";
+import React from 'react'
+import { Mood } from '@prisma/client'
+import { redirect } from 'next/navigation'
+import prisma from '../../../../../lib/prisma'
 
 async function createEntry(data: FormData) {
-  "use server";
+  'use server'
   const formData = {
-    title: data.get("title")!.toString(),
-    content: data.get("content")!.toString(),
-    mood: data.get("mood")! as Mood,
-  };
-  await prisma.entry.create({ data: formData });
-  redirect("/");
+    title: data.get('title')!.toString(),
+    content: data.get('content')!.toString(),
+    mood: data.get('mood')! as Mood,
+  }
+  await prisma.entry.create({ data: formData })
+  redirect('/')
 }
 
 export default function CreatePage() {
-  const moods = Object.values(Mood);
+  const moods = Object.values(Mood)
 
   return (
     <div className="container mx-auto p-4">
@@ -81,5 +81,5 @@ export default function CreatePage() {
         </button>
       </form>
     </div>
-  );
+  )
 }
