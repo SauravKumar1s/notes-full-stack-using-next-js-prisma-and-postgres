@@ -7,6 +7,7 @@ datasource db {
   url = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
+
 model Entry{
   id String @id @default(uuid())
   title String
@@ -16,10 +17,17 @@ model Entry{
 }
 
 enum Mood{
-  Joyful
-  Excited
-  Angry
-  Depressed
-  Exhausted
-  Anxious
+  Personal
+  Work
+  Travel
+  Health
+}
+
+model User {
+  id            String    @id @default(cuid())
+  username      String    @unique
+  name          String?
+  email         String    @unique
+  password      String?
+  createdAt     DateTime  @default(now())
 }
