@@ -18,21 +18,12 @@ export default function CreatePage() {
     });
     
     redirect("/notes");
-
-    
   }
 
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-start mb-4">
-        <button
-          // onClick={goBack}
-          className="bg-gray-300 text-gray-700 py-2 px-4 rounded hover:bg-gray-400"
-        >
-          Back
-        </button>
-      </div>
+     
       <form
         action={createEntry}
         className="max-w-md mx-auto bg-white p-8 border rounded shadow"

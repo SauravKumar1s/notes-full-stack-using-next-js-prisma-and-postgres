@@ -22,7 +22,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const passwordMatch = compare(password, user.password!);
+    const passwordMatch = await compare(password, user.password!); // Await the password comparison
 
     if (!passwordMatch) {
       return NextResponse.json(
@@ -36,9 +36,9 @@ export async function POST(req: Request) {
       expiresIn: "7d",
     });
 
-    // Return success response with token
+    // Return success response with token and redirect URL
     return NextResponse.json(
-      { user, token, message: "Login successful" },
+      { user, token, message: "Login successful", redirect: "/notes" },
       { status: 200 }
     );
   } catch (error) {

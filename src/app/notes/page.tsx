@@ -5,16 +5,9 @@ import Categories from "@/components/Categories";
 import { cookies } from "next/headers";
 import axios from "@/lib/axios";
 import {
-  MdAdd,
-  MdFavorite,
-  MdFlight,
-  MdNote,
-  MdPerson,
-  MdWork,
+  MdAdd
 } from "react-icons/md";
-import { redirect } from "next/navigation";
 import LogoutButton from "@/components/LogoutButton";
-
 export default async function Home() {
   const cookie = cookies().get("token");
   const response = await axios("/api/notes", {
@@ -22,16 +15,17 @@ export default async function Home() {
       Cookie: `${cookie?.name}=${cookie?.value}`,
     },
   });
+  
  
   return (
     <>
-      <div className="container p-4">
-        <div className="flex flex-row justify-between items-center text-gray-900  cursor-pointer mb-4">
+      <div className=" p-4">
+        <div className="flex  justify-between items-center text-gray-900  cursor-pointer mb-4">
           <div className="flex gap-4 text-md ml-3 font-semibold">
             <div className="border border-gray-500 p-2">
               {/* <MdNote className="w-8 h-8 mb-2 " /> */}
             </div>{" "}
-            All Notes
+            Notes
           </div>
           <div>
           <LogoutButton/>

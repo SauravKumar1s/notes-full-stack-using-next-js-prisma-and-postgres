@@ -3,15 +3,18 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 const Login: React.FC = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPopup, setShowPopup] = useState(false);
   const [popupMessage, setPopupMessage] = useState("");
-  // const router = useRouter();
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
 
   const handleLogin = async () => {
+    console.log("password" ,  password);
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -19,6 +22,7 @@ const Login: React.FC = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email, password }),
+        
       });
       if (response.ok) {
         const { token } = await response.json();
@@ -48,6 +52,10 @@ const Login: React.FC = () => {
       console.error("Error during login:", error);
     }
   };
+
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
+  };
   
 
   return (
@@ -76,22 +84,25 @@ const Login: React.FC = () => {
               required
             />
           </div>
-          <div className="mb-4">
-            <label
-              htmlFor="password"
-              className="block text-gray-700 text-sm font-bold mb-2"
-            >
+          <div className="mb-4 relative">
+            <label htmlFor="password" className="block text-gray-700 text-sm font-bold mb-2">
               Password
             </label>
             <input
-              type="password"
+              type={isPasswordVisible ? "text" : "password"}
               id="password"
-              className="border text-black p-2 w-full rounded"
+              className="border text-black p-2 w-full rounded "
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-          </div>
+            <div
+              className="absolute inset-y-0 right-3 flex items-center top-8 cursor-pointer"
+              onClick={togglePasswordVisibility}
+            >
+              {isPasswordVisible ? <FaEyeSlash /> : <FaEye />}
+            </div>
+            </div>
           <button
             type="button"
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"

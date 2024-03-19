@@ -1,5 +1,6 @@
 "use server";
 
+import { hash } from 'bcrypt';
 import prisma from '../../../../lib/prisma';
 import bcrypt from 'bcryptjs'
 
@@ -26,14 +27,15 @@ export const changePassword = async (resetPasswordToken: string, password: strin
     }
     
 
-    const passwordHash = bcrypt.hashSync(password, 10);
+    const hashedPassword = await hash(password, 10);
+
 
     await prisma.user.update({
         where: {
             id: user.id
         },
         data: {
-            passwordHash,
+            password : hashedPassword,
             resetPasswordToken: null,
             resetPasswordTokenExpiry: null,
         }
